@@ -1,0 +1,45 @@
+{% include "base.html"%}
+
+
+{% block content %}
+
+<main>
+    <div>
+        <h1 style="text-align: center;">ALL COUNTRIES</h1>
+        <div class="container">
+            <div class="row">
+
+                {% for country in countries %}
+                <div class="col-lg-3, col-md-4 col-sm-6 col-12">
+                    <article class="card mb-4">
+                        <img style="height:200px" src="{{country['flags']['png']}}" class="card-img-top" alt="{{country['flags']['alt']}}">
+                        <div class="card-body">
+                            <strong>
+                                <h5 class="card-title">{{country["name"]['common']}}</h5>
+                            </strong>
+                            <h6>...........</h6>
+                            <h6 class="card-title">POPULACJA: {{country["population"]}} </h6>
+                            <p class="card-text">REGION : {{country["region"]}}</p>
+                            <p class="card-text">STOLICA : {{country["capital"]}}</p>
+
+                            {%if country['capital'] is defined %}
+                            <p class="card-text">Capital: {{country['capital'][0]}}</p>
+                            {% else %}
+                            <p class="card-text">Capital: ?</p>
+                            {% endif %}
+
+                        </div>
+                    </article>
+
+                </div>
+                {% endfor %}
+            </div>
+
+
+        </div>
+
+</main>
+
+
+
+{% endblock %}
