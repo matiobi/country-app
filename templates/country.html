@@ -1,0 +1,54 @@
+{% include "base.html"%}
+
+
+{% block content %}
+
+<main class="container">
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <button onclick="window.location.href = '/'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg>
+                    POWRÓT
+
+
+                </button>
+            </div>
+            <div class="col">
+                <h2><strong>{{country['common_name']}}</strong></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <img style="width:600px" src="{{country['coat_of_arms']}}" class="card-img-top">
+            </div>
+            <div class="col">
+                <p><strong>NATIVE NAME: </strong>{{country['native_name']}}</p>
+                <p><strong>LANGUAGES: </strong>{{country['languages']}}</p>
+                <p><strong>POPULATION: </strong>{{country['population']}}</p>
+                <p><strong>REGION: </strong>{{country['region']}}</p>
+            </div>
+            <div class="col">
+                <p><strong>SUBREGION: </strong>{{country['subregion']}}</p>
+                <p><strong>CAPITAL: </strong>{{country['capital']}}</p>
+                <p><strong>CURRENCY: </strong>{{country['currency_name']}}</p>
+
+                {% for neighbour in neighbours%}
+                <a class="btn btn-secondary" href="/country/{{neighbour|lower}}">{{neighbour}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+
+    </div>
+
+
+</main>
+
+
+{% endblock %}
