@@ -14,9 +14,13 @@
                     aria-describedby="basic-addon1">
             </div>
 
+
+
+
+
             <div style="width:35%" class="input-group mb-2 shadow-sm mt-3 mb-3">
 
-                <select class="form" name="continent_filter">
+                <select class="form-select" name="continent_filter">
                     <option value="">Filter by region</option>
                     <option value="Africa">Africa</option>
                     <option value="Americas">Americas</option>
@@ -25,8 +29,13 @@
                     <option value="Oceania">Oceania</option>
                 </select>
             </div>
+
+
+
+
+            
         </form>
-        <div class="container">
+        <div>
             <div class="row">
 
                 {% for country in countries %}
