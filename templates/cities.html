@@ -1,0 +1,37 @@
+{% include "base.html"%}
+
+
+{% block content %}
+
+
+<h2>FORMULARZ</h2>
+
+<form method="POST" action="/add-city">
+
+    <input name="city_name" placeholder="NAZWA MIASTA">
+    <br>
+    <input name="city_population" placeholder="LICZBA LUDNOŚCI">
+    <br>
+    <input name="city_type" placeholder="TYP MIASTA">
+    <br>
+    <button type="submit">DODAJ</button>
+
+
+
+
+</form>
+
+
+
+<h3> MIASTA </h3>
+<div>
+    {% for city in cities %}
+    <div>
+        {{city['name']}}
+
+    </div>
+</div>
+
+{%endfor%}
+
+{% endblock %}

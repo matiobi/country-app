@@ -1,8 +1,45 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify, redirect
 import requests
+from pymongo import MongoClient
 
 app = Flask(__name__)
 app.debug = True
+
+#Połączenie z bazą danych
+
+clinet = MongoClient("mongodb+srv://mobirek:0x4JoghzVJeQdNUe@bazadanych.qi41g3x.mongodb.net/?retryWrites=true&w=majority&appName=AtlasApp")
+poland_db = clinet["polska"]
+poland_cities = poland_db["miasta"]
+
+@app.route('/api/get-cities')
+def get_all_cities():
+    data = list(poland_cities.find({},{"_id":0}))
+    return jsonify(data)
+
+@app.route("/cities")
+def cities_page():
+    cities = list(poland_cities.find({},{"_id":0}))
+    return render_template("cities.html", cities=cities)
+
+
+#------------------------------------------------------
+
+@app.route("/add-city", methods=['POST'])
+def add_city():
+    name = request.form.get("city_name")
+    population = request.form.get("city_population")
+    type = request.form.get("city_type")
+
+    poland_cities.insert_one({
+        "name":name,
+        "population": population,
+        "type":type
+
+    })
+
+    return redirect("/cities", code=302)
+
+
 
 
 @app.route("/", methods=["GET", "POST"])
