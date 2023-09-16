@@ -1,0 +1,76 @@
+{% include "base.html"%}
+
+
+{% block content %}
+
+
+
+
+<div>
+    <h1> TRAVELS </h1>
+    <div class="row">
+
+        {% for travel in travels %}
+        <div class="col-lg-4, col-md-3 col-sm-6 col-12">
+            <article class="card mb-5">
+                <div class="card-body">
+                    <strong>
+                        <h5 class="card-title">{{travel["title"]}}</h5>
+                    </strong>
+                    <h6>...........</h6>
+                    <p class="card-title">OPIS: {{travel["desc"]}} </p>
+                    <p class="card-text">DATA ROZPOCZĘCIA : {{travel["start"]}}</p>
+                    <p class="card-text">DATA ZAKOŃCZENIA : {{travel["end"]}}</p>
+                    <p class="card-text">KOSZTY : {{travel["cost"]}}</p>
+                    <p class="card-text">KRAJ : {{travel["country"]}}</p>
+                    
+                    <a class="btn btn-primary" href="/edit-travel/{{travel['_id']}}">EDIT</a>
+
+
+                    <!-- Button trigger modal -->
+                    <button type="button"
+                            class="btn btn-danger" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#id-{{travel['_id']}}">
+                        DELETE
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="id-{{travel['_id']}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">USUWANIE POZYCJI W BAZIE DANYCH</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    CZY CHCESZ USUNĄĆ WYBRANĄ POZYCJĘ {{travel['title']}}?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <form method="POST" action="/api/delete-travel">
+                                        <input name="id_to_delete" value="{{travel['_id']}}" type="hidden">
+                                        <button type="submit" class="btn btn-danger">DELETE</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </article>
+            </a>
+        </div>
+
+
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock %}

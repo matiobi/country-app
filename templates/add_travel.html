@@ -1,0 +1,50 @@
+{% include "base.html"%}
+
+
+{% block content %}
+
+<h1 style="text-align: center"><strong>WAKACJE</strong></h1>
+
+<div class="container">
+    <form method="POST" action="/api/add-travel">
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <input required type ="text" class="form-control" name="travel_title" placeholder="NAZWA WAKACJI">
+            <div class="form-text"></div>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <input required type ="text" class="form-control" name="travel_desc" placeholder="OPIS">
+            <div class="form-text"></div>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <input required type="date" class="form-control" name="travel_start" placeholder="DATA ROZPOCZĘCIA">
+            <div class="form-text"></div>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <input required type="date" class="form-control" name="travel_end" placeholder="DATA ZAKOŃCZENIA">
+            <div class="form-text"></div>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <input required type="text" class="form-control" name="travel_cost" placeholder="KOSZTY PODRÓŻY">
+            <div class="form-text"></div>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <label for="exampleInputEmail1" class="form-label"></label>
+            <select required type="text" name="travel_country" id="formGroupExampleInput" class="form-select" aria-label="Default select example">
+                <option value="">SELECT COUNTRY</option>
+                {% for country_name in names %}
+                <option value="{{country_name}}">{{country_name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+        <div class="mb-3 mx-auto" style="width:20%">
+            <button type="submit" class="btn btn-outline-secondary mx-auto">DODAJ WAKACJE</button>
+            <div class="form-text"></div>
+        </div>       
+    </form>
+</div>
+{% endblock %}
