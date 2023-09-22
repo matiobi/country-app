@@ -10,7 +10,7 @@
                 <button type="submit" class="input-group-text" id="basic-addon1">
                     <i class="bi bi-search"></i>
                 </button>
-                <input type="text" class="form-control" name="query" placeholder="Search Country" aria-label="Username"
+                <input id="searchField" type="text" class="form-control" name="query" placeholder="Search Country" aria-label="Username"
                     aria-describedby="basic-addon1">
             </div>
 
@@ -39,7 +39,7 @@
             <div class="row">
 
                 {% for country in countries %}
-                <div class="col-lg-4, col-md-3 col-sm-6 col-12">
+                <div data-country class="col-lg-4, col-md-3 col-sm-6 col-12">
                     <a href="/country/{{country['name']['common']|lower}}">
                         <article class="card mb-5" >
                             <img style="height:200px" src="{{country['flags']['png']}}" class="card-img-top"

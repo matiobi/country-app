@@ -56,11 +56,22 @@ def api_delete_travel():
 
 @app.route("/api/edit-travel", methods=['POST'])
 def api_edit_travel():
-    return redirect("/travels")
+        
+
+        id = request.form.get("id_to_edit")
+        reponse = edit_travel(id)
+    
+        return redirect("/travels")
+
+
+
+
+
 
 @app.route("/api/get-travel-by-id/<id>")
 def api_get_travel_by_id(id):
     data = get_travel_by_id(id)
+    
     return data
 
 # API _END----------------------------------------------------------------------
@@ -75,10 +86,36 @@ def travels_page():
 @app.route("/edit-travel/<id>")
 def edit_travel_page(id):
 
+    try:
 
-    result = get_travels_by_id(id)
+        countries_response = requests.get("https://restcountries.com/v3.1/all")
+        coutries = countries_response.json()
+        names = list(map(lambda country: country['name']['common'], coutries))
+        
+        response = requests.get(f"http://127.0.0.1:5000/api/get-travel-by-id/{id}")
+        travel = response.json()
+        print(travel)
+        return render_template("edit-travel.html", travel=travel['data'],  names=sorted(names))
 
-    return render_template("edit-travel.html")
+    except Exception as e:
+        print(e, "Test")
+        return render_template("edit-travel.html", travel={})
+
+
+
+
+    # try:
+    #     result = get_travel_by_id(id)
+    #     response = requests.get("https://restcountries.com/v3.1/all")
+    #     coutries = response.json()
+    #     names = list(map(lambda country: country['name']['common'], coutries))
+
+
+    #     return render_template("edit-travel.html", names=sorted(names))
+    
+    # except Exception as e:
+    #     print("Error", e)
+    #     return render_template("add_travel.html", names=[])
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -114,9 +151,9 @@ def country_page(name):
         response = requests.get(f"https://restcountries.com/v3.1/name/{name}")
         data = response.json()
 
-        currency_key = list(data[0]['currencies'].keys())[0]
-        native_name_key = list(data[0]['name']['nativeName'].keys())[0]
-        languages = list(data[0]['languages'].values())
+        currency_key = list(data[0]['currencies'].keys())[0] if data[0].get("currencies") is not None else []
+        native_name_key = list(data[0]['name']['nativeName'].keys())[0] if data[0]['name'].get("nativeName") is not None else []
+        languages = list(data[0]['languages'].values()) if data[0].get("languages") is not None else []
 
         neighbours = []
 
@@ -131,17 +168,17 @@ def country_page(name):
         
 
         country = {
-          "currency_name": data[0]['currencies'][currency_key]['name'],
-          "native_name":data[0]['name']['nativeName'][native_name_key]['common'],
-          "common_name": data[0]['name']['common'],
-          "languages" : ", " .join(languages),
-          "population": data[0]['population'],
-          "region" : data[0]['region'],
-          "subregion" : data[0]['subregion'],
-          "capital" : data[0]['capital'][0],
-          "tld" : data[0]['tld'],
+          "common_name":data[0]['name']['common'],
+          "native_name":data[0]['name']['native_Name'][native_name_key]['common'] if data[0]['name'].get('native_name') else "?",
+          "currency_name": data[0]['currencies'][currency_key]['name'] if data[0].get("currencies") else "?",
+          "languages":", ".join(languages),
+          "population":data[0]['population'],
+          "region":data[0]['region'],
+          "capital":data[0]['capital'][0] if data[0].get('capital') else '?',
+          "sub_region":data[0]['subregion'] if data[0].get("subregion") else '?',
+          'tld':data[0]['tld'],
           "coat_of_arms":data[0]["coatOfArms"]['svg'] if data[0]['coatOfArms'] else data[0]['flags']['svg']
-        }
+      }
 
         
 
